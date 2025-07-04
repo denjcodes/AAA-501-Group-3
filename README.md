@@ -1,5 +1,3 @@
-Modified outline based off your proposal:
-
 # Airfare Prediction and Route Segmentation Across U.S. Routes (1993–2024)
 
 ## Introduction
