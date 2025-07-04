@@ -1,53 +1,92 @@
-# AA-501-Group-3
+Modified outline based off your proposal:
 
-For your technical report document:
+# Airfare Prediction and Route Segmentation Across U.S. Routes (1993–2024)
 
 ## Introduction
-Provide background information on the problem you are addressing, the goals of your analysis, and any relevant context. Clearly state the objectives and research questions.
+
+### Project Topic Statement
+
+This project investigates how historical airline fare and route data can be used to predict airfare prices and identify customer behavior trends in air travel across the United States from 1993 to 2024. The system employs both regression algorithms for fare prediction and clustering algorithms for identifying route or customer-type groupings. These insights aim to assist airline carriers and travel platforms in fare optimization and market segmentation strategies.
 
 ---
 
 ## Data Cleaning/Preparation
-Describe the data sources you used. Explain the steps taken to clean and preprocess the data, such as:
-- Handling missing values
-- Removing duplicates
-- Converting data types
-- Normalization or scaling
-- Feature engineering
+
+The dataset spans over 30 years of U.S. domestic airline fare and route data (1993–2024). Key steps include:
+
+- Handling missing or inconsistent historical fare records.
+- Normalizing features such as route distance, carrier codes, and seasonal indicators.
+- Engineering features from raw data (e.g., converting dates to seasonality, categorizing carriers, calculating route distances).
+- Removing duplicate entries and outliers (e.g., fares far outside reasonable ranges).
+- Encoding categorical features and scaling continuous variables.
 
 ---
 
 ## Exploratory Data Analysis
-Include descriptive statistics and visualizations that help you understand the data. Possible content:
-- Distribution plots
-- Correlation heatmaps
-- Boxplots
-- Pairwise scatterplots
-- Any insights or anomalies discovered
+
+The exploratory analysis focuses on understanding key trends and correlations, including:
+
+- Fare distributions over years and across regions.
+- Price variability by carrier, route distance, and seasonality.
+- Correlation analysis to understand the influence of features on fare pricing.
+- Visualization of route clusters and seasonal demand patterns.
+- Preliminary inspection to detect potential segmentations (e.g., premium long-haul vs. budget short-haul).
 
 ---
 
 ## Model Selection
-Discuss the models you considered and justify your choice(s). Include details like:
-- Rationale for selecting certain algorithms
-- Parameter tuning approaches
-- Validation strategies (e.g., cross-validation)
+
+### Problem Definition
+
+- *How do route characteristics (e.g., distance, carrier, region, seasonality) influence airfare?*
+- *Can we group U.S. routes or travelers into meaningful clusters to inform pricing and planning?*
+- *What patterns can be learned from over 30 years of data to assist airline revenue management?*
+
+### Algorithms
+
+- *Regression*: Linear Regression, Random Forest Regressor, XGBoost — for fare prediction.
+- *Clustering*: K-Means, DBSCAN — for traveler or route segmentation.
+
+### System Overview
+
+- Data ingestion and preprocessing pipeline.
+- Clustering module to identify route or seasonal clusters.
+- Regression module to predict fare prices.
+- Evaluation framework using metrics such as RMSE, MAE, and silhouette scores.
 
 ---
 
 ## Model Analysis
-Present the performance of your model(s). Include:
-- Evaluation metrics (e.g., accuracy, precision, recall, F1 score, ROC-AUC)
-- Confusion matrices
-- Learning curves
-- Error analysis
+
+### Regression Analysis
+
+- Evaluate prediction accuracy using RMSE and MAE across Linear Regression, Random Forest, and XGBoost models.
+- Feature importance analysis to determine the most influential factors on fare predictions.
+
+### Clustering Analysis
+
+- Identify optimal number of clusters using elbow method and silhouette score.
+- Interpret resulting clusters (e.g., "high-volume short-haul," "premium transcontinental") for strategic pricing.
+- Validate clusters against external indicators like demand volume and revenue potential.
+
+### Example System Behaviors
+
+- Given a new route (e.g., LAX → ORD on Delta in March), the system predicts expected fare.
+- Clusters of routes emerge, revealing key segments to support targeted marketing or fleet planning.
+- The system flags underpriced routes or suggests competitive adjustments.
 
 ---
 
 ## Conclusion and Recommendations
-Summarize your findings and discuss how they address your original objectives. Provide actionable recommendations or suggestions for future work or improvements.
+
+The analysis demonstrates that route characteristics such as carrier, distance, and seasonality significantly affect airfare pricing. Regression models (especially Random Forest and XGBoost) provide strong predictive performance, while clustering helps identify strategic segments for market differentiation.
+
+*Recommendations:*
+
+- Airlines should focus on dynamic pricing strategies for clusters identified as price-sensitive.
+- Further refinement of seasonal and regional features can improve predictive accuracy.
+- Integration with external factors (e.g., macroeconomic data, fuel prices) may provide additional improvements.
 
 ---
 
 ## Appendix
-### Code Output from Jupyter Notebook
