@@ -1,10 +1,12 @@
-# Airfare Prediction and Route Segmentation Across U.S. Routes (1993–2024)
+# Forecasting in the U.S. Domestic Airline Industry
 
 ## Introduction
 
+This project applies AI-driven forecasting to the U.S. domestic airline industry, where volatility in fuel prices, seasonal demand, and competition challenge profitability—especially for startups. By combining machine learning regressors and statistical time series models, we aim to improve route planning and fare optimization.
+
 ### Project Topic Statement
 
-This project investigates how historical airline fare and route data can be used to predict airfare prices and identify customer behavior trends in air travel across the United States from 1993 to 2024. The system employs both regression algorithms for fare prediction and clustering algorithms for identifying route or customer-type groupings. These insights aim to assist airline carriers and travel platforms in fare optimization and market segmentation strategies.
+Using the U.S. Airline Flight Routes and Fares 1993–2024 dataset, we explore how route attributes (carrier, distance, timing) affect fares and revenue. Models are evaluated not only for prediction accuracy but also for their ability to correctly anticipate trend directions, enabling better strategic decisions.
 
 ---
 
@@ -12,11 +14,10 @@ This project investigates how historical airline fare and route data can be used
 
 The dataset spans over 30 years of U.S. domestic airline fare and route data (1993–2024). Key steps include:
 
-- Handling missing or inconsistent historical fare records.
-- Normalizing features such as route distance, carrier codes, and seasonal indicators.
-- Engineering features from raw data (e.g., converting dates to seasonality, categorizing carriers, calculating route distances).
-- Removing duplicate entries and outliers (e.g., fares far outside reasonable ranges).
-- Encoding categorical features and scaling continuous variables.
+- Dropped columns with >50% missingness and rows missing required fields.
+- Removed duplicates, standardized data types, and mapped cities to major airports.
+- Engineered features: revenue, fare_per_mile, passengers_per_mile, fare_per_passenger, year_quarter, and airport–airline mappings.
+- Applied IQR filtering on selected numeric fields to reduce extreme outliers while preserving meaningful changes.
 
 ---
 
@@ -24,67 +25,34 @@ The dataset spans over 30 years of U.S. domestic airline fare and route data (19
 
 The exploratory analysis focuses on understanding key trends and correlations, including:
 
-- Fare distributions over years and across regions.
-- Price variability by carrier, route distance, and seasonality.
-- Correlation analysis to understand the influence of features on fare pricing.
-- Visualization of route clusters and seasonal demand patterns.
-- Preliminary inspection to detect potential segmentations (e.g., premium long-haul vs. budget short-haul).
+- Analyzed fare distributions, geographic trends, and seasonal effects.
+- Correlation analysis revealed strong links between passengers and revenue, and between distance and fare_per_mile.
+- Visualized trends, clusters, and route popularity (e.g., LAX ↔ LAS, ATL ↔ JFK).
+- Identified distinct route segments (short-haul business, seasonal leisure, long-haul premium) informing feature selection.
 
 ---
 
 ## Model Selection
 
-### Problem Definition
+*Problem Definition*: Forecast quarterly route revenue with high accuracy and correct directional trend prediction.
 
-- *How do route characteristics (e.g., distance, carrier, region, seasonality) influence airfare?*
-- *Can we group U.S. routes or travelers into meaningful clusters to inform pricing and planning?*
-- *What patterns can be learned from over 30 years of data to assist airline revenue management?*
+### Models Tested
 
-### Algorithms
-
-- *Regression*: Linear Regression, Random Forest Regressor, XGBoost — for fare prediction.
-- *Clustering*: K-Means, DBSCAN — for traveler or route segmentation.
-
-### System Overview
-
-- Data ingestion and preprocessing pipeline.
-- Clustering module to identify route or seasonal clusters.
-- Regression module to predict fare prices.
-- Evaluation framework using metrics such as RMSE, MAE, and silhouette scores.
-
----
+- *Regression*: Random Forest Regression, XGBoost Regression.
+- *Statistical*: ARIMA, SARIMA
+- Evaluation Metrics: RMSE, MAE, R², MAPE, and Directional Accuracy (DA).
+- 222 configurations tested; feature sets included lag, rolling mean, and percentage change metrics.
+- Top model: XGBoost Regression with MAPE 1.3%, R² 0.612, DA 90%.
 
 ## Model Analysis
 
-### Regression Analysis
+XGBoost with temporal and seasonal features (lag_1, lag_4, rolling_mean_4, pct_change_1) delivered the best trade-off between low error and high trend prediction accuracy. Directional accuracy was emphasized for its strategic value—guiding which routes and carriers to prioritize each quarter.
 
-- Evaluate prediction accuracy using RMSE and MAE across Linear Regression, Random Forest, and XGBoost models.
-- Feature importance analysis to determine the most influential factors on fare predictions.
+## Conclusion
 
-### Clustering Analysis
+Machine learning models, particularly XGBoost, can accurately forecast both revenue magnitude and trend direction in the airline industry. This hybrid approach blends predictive power with actionable insights, helping startup airlines compete in a volatile market.
 
-- Identify optimal number of clusters using elbow method and silhouette score.
-- Interpret resulting clusters (e.g., "high-volume short-haul," "premium transcontinental") for strategic pricing.
-- Validate clusters against external indicators like demand volume and revenue potential.
+### Recommendations
 
-### Example System Behaviors
-
-- Given a new route (e.g., LAX → ORD on Delta in March), the system predicts expected fare.
-- Clusters of routes emerge, revealing key segments to support targeted marketing or fleet planning.
-- The system flags underpriced routes or suggests competitive adjustments.
-
----
-
-## Conclusion and Recommendations
-
-The analysis demonstrates that route characteristics such as carrier, distance, and seasonality significantly affect airfare pricing. Regression models (especially Random Forest and XGBoost) provide strong predictive performance, while clustering helps identify strategic segments for market differentiation.
-
-*Recommendations:*
-
-- Airlines should focus on dynamic pricing strategies for clusters identified as price-sensitive.
-- Further refinement of seasonal and regional features can improve predictive accuracy.
-- Integration with external factors (e.g., macroeconomic data, fuel prices) may provide additional improvements.
-
----
-
-## Appendix
+- *Enhance Feature Engineering* – Incorporate seasonal peaks, holiday periods, weather impacts, and geographic classifications.
+- *Integrate External Data* – Add macroeconomic indicators (fuel prices, consumer spending, employment rates) to improve model stability during market shocks.
